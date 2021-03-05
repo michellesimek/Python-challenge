@@ -9,27 +9,31 @@ csvpath = os.path.join("..", "Resources", "budget_data.csv")
 
 #function to return analysis for dataset
 def dataset_analysis(row):
-    #find the total number of months included in the dataset
-    #create an empty list
+
     total_months = []
-    #for each row in the csv, add the month to the total_months list
-    for row in csvreader:
-        total_months.append(row[0])
-    #print the length of total_months list to determine total number of months
-    print(f'Total Months: {len(total_months)}')
+    profits_losses = []
+    total_amount = 0
     
-    # total_months = 0
-    # total_months = total_months + month
-    # total_profit_loss = 0
-    # for row in csvreader: 
-    #     total_profit_loss = total_profit_loss + profit_loss
-    # average = total_profit_loss/months
-    # print(profit_loss)
-    # print(profit_loss)
+    for row in csvreader:
+        #add each month to total_months list
+        total_months.append(row[0])
+        #add profit/losses to the profit_losses list
+        profits_losses.append(int(row[1]))
+        #add profit/losses to total net amount
+        total_amount += int(row[1])
+        average_change = total_amount/(len(total_months))
+        greatest_profit = max(profits_losses)
+        greatest_lost = min(profits_losses)
 
-    # print(total_profit_loss)
+    
+    print(f'Total Months: {len(total_months)}')
+    print(f'Total: ${total_amount}')
+    print(f'Average Change: ${round(average_change,2)}')
+    print(f'Greatest Increase in Profits: ${greatest_profit}')
+    print(f'Greatest Decrease in Profits: ${greatest_lost}')
 
-#open file as read-only
+
+
 with open(csvpath, 'r', encoding='utf8') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
@@ -38,6 +42,5 @@ with open(csvpath, 'r', encoding='utf8') as csvfile:
     print('----------------------------------------')
 
     for row in csvreader:
-        # print(row)
         dataset_analysis(row)
-        
+
