@@ -6,63 +6,69 @@ import csv
 
 #path of file we are pulling
 csvpath = os.path.join("..", "Resources", "budget_data.csv")
+#path to export results in a textfile
+output_path = os.path.join("..", "analysis", "results.txt")
+
 
 #function to return analysis for dataset
-def dataset_analysis(textfile):
+def dataset_analysis():
 
-    #create list to add months
+
     total_months = []
-    #create list to add profits/losses
     profits_losses = []
-    #set total amount to zero to begin
     total_amount = 0
+
+    change_amount = 0
+    previous_amount = 0
+    change_list = []
+
     
     #for loop to read each row in csv
     for row in csvreader: 
         
-        #add each month to total_months list
+        #find number of months and new total amount of Profits/Losses
         total_months.append(row[0])
-        #add profit/losses to the profit_losses list
-        profits_losses.append(int(row[1]))
-        #add profit/losses to total net amount
         total_amount += int(row[1])
         
-        average_change = total_amount/(len(total_months))
-        greatest_profit = max(profits_losses)
-        greatest_lost = min(profits_losses)
+        #Determine average of changes in profits
+        change_amount = int(row[1]) - previous_amount
+        previous_amount = int(row[1])
+        change_list += [change_amount]
+        
+    #find average revenue change from change_list
+    average_change = round(sum(change_list) / len(change_list),2)
+    greatest_profit = max(change_list)
+    greatest_loss = min(change_list)
 
+    
+    #print results 
     print(f"Finanical Analysis")
     print('----------------------------------------')
     print(f'Total Months: {len(total_months)}')
     print(f'Total: ${total_amount}')
-    print(f'Average Change: ${round(average_change,2)}')
-    print(f'Greatest Increase in Profits: ${greatest_profit}')
-    print(f'Greatest Decrease in Profits: ${greatest_lost}')
+    print(f'Average Change: ${average_change}')
+    print(f'Greatest Increase in Profits: $({greatest_profit})')
+    print(f'Greatest Decrease in Profits: $({greatest_loss})')
 
-    textfile.write(
+    with open(output_path, 'w', encoding = 'utf8') as textfile:
+
+        #write the results found above
+        textfile.write(
         "Finanical Analysis\n"
         '----------------------------------------\n'
         'Total Months: ' + str(len(total_months)) + '\n'
         'Total: ' + str(total_amount) + '\n'
-        'Average Change: ${round(average_change,2)}'
-        'Greatest Increase in Profits: ${greatest_profit}'
-        'Greatest Decrease in Profits: ${greatest_lost}')
+        'Average Change: $ ' + str({average_change,}) + '\n'
+        'Greatest Increase in Profits: $ ' + str({greatest_profit}) + '\n'
+        'Greatest Decrease in Profits: $ ' + str({greatest_loss}) + '\n')
 
-#path of above script
-dataset_path = '/Users/michellesimek/Desktop/Homework/python-challenge/PyBank/analysis/'
-
-#path for creating a text file that will contain above information
-output_path = os.path.join(dataset_path, "new.txt")
-
-#open the new text file as write
-# with open(output_path, 'w', encoding = 'utf8') as txt:
-#     txt.write("hi")
-
-textfile = open(output_path, 'w', encoding = 'utf8')
 #open csvfile as read only
 with open(csvpath, 'r', encoding='utf8') as csvfile:
+    #read csvfile with a comma being the delimiter 
     csvreader = csv.reader(csvfile, delimiter=',')
 
     #read header row
     csv_header = next(csvreader)
-    dataset_analysis(textfile)
+    #pull the dataset_analysis function to find results
+    dataset_analysis()
+
