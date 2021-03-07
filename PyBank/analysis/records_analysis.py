@@ -21,6 +21,8 @@ def dataset_analysis():
     change_amount = 0
     previous_amount = 0
     change_list = []
+    greatest_profit = []
+    greatest_lost = []
 
     
     #for loop to read each row in csv
@@ -34,6 +36,12 @@ def dataset_analysis():
         change_amount = int(row[1]) - previous_amount
         previous_amount = int(row[1])
         change_list += [change_amount]
+
+        #find which months the greatest increast and greatest decrease amounts belong to
+        if change_amount == max(change_list):
+            greatest_month = row[0]
+        if change_amount == min(change_list):
+            loss_month = row[0]
         
     #find average revenue change from change_list
     average_change = round(sum(change_list) / len(change_list),2)
@@ -49,6 +57,9 @@ def dataset_analysis():
     print(f'Average Change: ${average_change}')
     print(f'Greatest Increase in Profits: $({greatest_profit})')
     print(f'Greatest Decrease in Profits: $({greatest_loss})')
+    print(greatest_month)
+    print(loss_month)
+
 
     with open(output_path, 'w', encoding = 'utf8') as textfile:
 
