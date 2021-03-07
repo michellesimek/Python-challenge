@@ -5,16 +5,17 @@ csvpath = os.path.join("..", "Resources", "election_data.csv")
 
 def election_analysis():
     candidates = []
-    total_votes = []
+    total_votes = len(list(csvreader))
   
     
     for row in csvreader:
-        total_votes.append(row[0])
+        # total_votes.append(row[0])
+        candidates.append(row[2])
   
 
     print("Election Results")
     print("---------------------")
-    print(f'Total Votes: {len(total_votes)}')
+    print(f'Total Votes: {total_votes}')
     print("---------------------")
 
 with open(csvpath, "r", encoding="utf8") as csvfile:
