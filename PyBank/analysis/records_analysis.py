@@ -13,7 +13,7 @@ output_path = os.path.join("..", "analysis", "results.txt")
 #function to return analysis for dataset
 def dataset_analysis():
 
-
+    #set blank lists and values before looping through rows in csv
     total_months = []
     profits_losses = []
     total_amount = 0
@@ -45,6 +45,7 @@ def dataset_analysis():
         
     #find average revenue change from change_list
     average_change = round(sum(change_list) / len(change_list),2)
+    #find greatest increase and greastest decrease in change
     greatest_profit = max(change_list)
     greatest_loss = min(change_list)
 
@@ -55,10 +56,8 @@ def dataset_analysis():
     print(f'Total Months: {len(total_months)}')
     print(f'Total: ${total_amount}')
     print(f'Average Change: ${average_change}')
-    print(f'Greatest Increase in Profits: $({greatest_profit})')
-    print(f'Greatest Decrease in Profits: $({greatest_loss})')
-    print(greatest_month)
-    print(loss_month)
+    print(f'Greatest Increase in Profits: {greatest_month} $({greatest_profit})')
+    print(f'Greatest Decrease in Profits: {loss_month} $({greatest_loss})')
 
 
     with open(output_path, 'w', encoding = 'utf8') as textfile:
@@ -70,8 +69,8 @@ def dataset_analysis():
         'Total Months: ' + str(len(total_months)) + '\n'
         'Total: ' + str(total_amount) + '\n'
         'Average Change: $ ' + str({average_change,}) + '\n'
-        'Greatest Increase in Profits: $ ' + str({greatest_profit}) + '\n'
-        'Greatest Decrease in Profits: $ ' + str({greatest_loss}) + '\n')
+        'Greatest Increase in Profits: ' + (greatest_month) + ' $(' + str(greatest_profit) + ')' + '\n'
+        'Greatest Decrease in Profits: ' + (loss_month) + ' $(' + str(greatest_loss) + ')' + '\n')
 
 #open csvfile as read only
 with open(csvpath, 'r', encoding='utf8') as csvfile:
