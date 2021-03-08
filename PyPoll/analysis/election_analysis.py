@@ -1,18 +1,23 @@
+#import os module to create paths across operating systems
 import os
+#import module for reading CSV files
+
 import csv
 
+#path of file we are pulling data from
 csvpath = os.path.join("..", "Resources", "election_data.csv")
+#path to export results in a textfile
 output_path = os.path.join("..", "analysis", "Election_results.txt")
 
 #function to analyze results
 def election_analysis():
     
-    candidates = []
+    #set blank list and values before looping through rows in csv
     total_votes = 0
+    candidates = []
     candidate_vote = []
     percentages = []
     results = {}
-    winner = []
 
     #loop through rows in csv
     for row in csvreader:
@@ -26,22 +31,23 @@ def election_analysis():
             candidate_vote.append(1)
             #create index to know position of candidate and their votes in lists
             index = candidates.index(row[2])
-        #if candidate is already listed in candidate list, tally up another vote in their running total
+        #if candidate is already listed in candidate list, tally up another vote in their specifc running total based on their index(location)
         else:
             #reference location of candidate already in list
             index = candidates.index(row[2])
             #add 1 vote to running tally of votes
             candidate_vote[index] += 1
     
+    #loop through each candidate total votes, and find percentages. Add percentages to percentages list
     for number in candidate_vote:
         percentages.append((number / total_votes)*100)
-    
 
-   
+    #add lists to results dictionary
     results["Candidate"] = candidates
     results["Votes"] = candidate_vote
     results["Vote Percentage"] = percentages
 
+    #print results
     print("Election Results")
     print("---------------------")
     print(f'Total Votes: {total_votes}')
@@ -54,8 +60,10 @@ def election_analysis():
     # print(f'{results["Candidate"][2]}: {results["Vote Percentage"][2]}%  ({results["Votes"][2]})')
     # print(f'{results["Candidate"][3]}: {results["Vote Percentage"][3]}%  ({results["Votes"][3]})')
     #create a for loop to loop through index (added 1 to grab last candidate) and determine values from result dictionary
+    #loop through index to print each indidivuals results together
     for x in range(index + 1):
         print(f'{results["Candidate"][x]}: {results["Vote Percentage"][x]}% ({results["Votes"][x]})')
+        #if statement to find winner based off who had the greatest number of votes
         if results["Votes"][x] == max(candidate_vote):
             winner = results["Candidate"][x]
     print("---------------------")
@@ -72,13 +80,12 @@ def election_analysis():
         "Votes: " + str(candidate_vote) + "\n"
         "Vote Percentage: " + str(percentages) + "\n")
 
-
 #open csv as read-only to analyze results
 with open(csvpath, "r", encoding="utf8") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
-    #skip headers
+    #read and skip header row
     csv_header = next(csvreader)
 
-    #call function to analyze results
+    #call election_analysis function to analyze results
     election_analysis()

@@ -4,7 +4,7 @@ import os
 #import module for reading CSV files
 import csv
 
-#path of file we are pulling
+#path of file we are pulling data from
 csvpath = os.path.join("..", "Resources", "budget_data.csv")
 #path to export results in a textfile
 output_path = os.path.join("..", "analysis", "PyBank_results.txt")
@@ -15,9 +15,9 @@ def dataset_analysis():
 
     #set blank lists and values before looping through rows in csv
     total_months = []
-    profits_losses = []
     total_amount = 0
 
+    #set blank lists and values before looping and finding change amount 
     change_amount = 0
     previous_amount = 0
     change_list = []
@@ -31,9 +31,9 @@ def dataset_analysis():
         total_amount += int(row[1])
         
         #Determine average of changes in profits
-        change_amount = int(row[1]) - previous_amount
+        change_amount = int(row[1]) - (previous_amount)
         previous_amount = int(row[1])
-        change_list += [change_amount]
+        change_list.append(change_amount)
 
         #find which months the greatest increast and greatest decrease amounts belong to
         if change_amount == max(change_list):
@@ -42,7 +42,7 @@ def dataset_analysis():
             loss_month = row[0]
         
     #find average revenue change from change_list
-    average_change = round(sum(change_list) / len(change_list),2)
+    average_change = round((sum(change_list)) / (len(change_list)),2)
     #find greatest increase and greastest decrease in change
     greatest_profit = max(change_list)
     greatest_loss = min(change_list)
@@ -57,7 +57,7 @@ def dataset_analysis():
     print(f'Greatest Increase in Profits: {greatest_month} $({greatest_profit})')
     print(f'Greatest Decrease in Profits: {loss_month} $({greatest_loss})')
 
-
+    #write results to a textfile
     with open(output_path, 'w', encoding = 'utf8') as textfile:
 
         #write the results found above
@@ -75,8 +75,9 @@ with open(csvpath, 'r', encoding='utf8') as csvfile:
     #read csvfile with a comma being the delimiter 
     csvreader = csv.reader(csvfile, delimiter=',')
 
-    #read header row
+    #read and skip header row
     csv_header = next(csvreader)
-    #pull the dataset_analysis function to find results
+
+    #call dataset_analysis function to find results
     dataset_analysis()
 
