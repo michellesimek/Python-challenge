@@ -7,7 +7,7 @@ import csv
 #path of file we are pulling
 csvpath = os.path.join("..", "Resources", "budget_data.csv")
 #path to export results in a textfile
-output_path = os.path.join("..", "analysis", "results.txt")
+output_path = os.path.join("..", "analysis", "PyBank_results.txt")
 
 
 #function to return analysis for dataset
@@ -21,8 +21,6 @@ def dataset_analysis():
     change_amount = 0
     previous_amount = 0
     change_list = []
-    greatest_profit = []
-    greatest_lost = []
 
     
     #for loop to read each row in csv
