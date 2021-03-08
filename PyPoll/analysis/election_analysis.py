@@ -11,6 +11,7 @@ def election_analysis():
     total_votes = 0
     candidate_vote = []
     percentages = []
+    results = {}
 
     #loop through rows in csv
     for row in csvreader:
@@ -32,22 +33,39 @@ def election_analysis():
             candidate_vote[index] += 1
     
     for number in candidate_vote:
-        percentages.append((number / total_votes))
+        percentages.append((number / total_votes)*100)
    
+    results["Candidate"] = candidates
+    results["Votes"] = candidate_vote
+    results["Vote Percentage"] = percentages
 
     print("Election Results")
     print("---------------------")
     print(f'Total Votes: {total_votes}')
     print("---------------------")
-    print(candidates)
-    print(candidate_vote)
-    print(percentages)
-   
-    
+    # print(candidates)
+    # print(candidate_vote)
+    # print(percentages)
+    # print(f'{results["Candidate"][0]}: {results["Vote Percentage"][0]}%  ({results["Votes"][0]})')
+    # print(f'{results["Candidate"][1]}: {results["Vote Percentage"][1]}%  ({results["Votes"][1]})')
+    # print(f'{results["Candidate"][2]}: {results["Vote Percentage"][2]}%  ({results["Votes"][2]})')
+    # print(f'{results["Candidate"][3]}: {results["Vote Percentage"][3]}%  ({results["Votes"][3]})')
+    #create a for loop to loop through index (added 1 to grab last candidate) and determine values from result dictionary
+    for x in range(index + 1):
+        print(f'{results["Candidate"][x]}: {results["Vote Percentage"][x]}% ({results["Votes"][x]})')
+
 
     #export election results to a textfile
     with open(output_path, "w", encoding="utf8") as textfile:
-        textfile.write("hello")
+        textfile.write(
+        "Election Results\n"
+        "---------------------\n"
+        "Total Votes: "+ str(total_votes) + "\n"
+        "---------------------\n"
+        "Candidates: " + str(candidates) + "\n"
+        "Votes: " + str(candidate_vote) + "\n"
+        "Vote Percentage: " + str(percentages) + "\n")
+
 
 #open csv as read-only to analyze results
 with open(csvpath, "r", encoding="utf8") as csvfile:
@@ -58,4 +76,3 @@ with open(csvpath, "r", encoding="utf8") as csvfile:
 
     #call function to analyze results
     election_analysis()
-
