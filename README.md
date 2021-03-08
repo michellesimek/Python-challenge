@@ -21,4 +21,8 @@ Task was the read through a csv that provided data from an election and calculat
 - Percentage of votes per candidate
 - Winner of the election
 
+<<<<<<< HEAD
 After calculating the above findings, the results were to print in the terminal and export into a textfile.
+=======
+After calculating the above findings, the results were to print in the terminal and export into a textfile.
+>>>>>>> 474766f554486b505f87fee1e30379a848d9117a
