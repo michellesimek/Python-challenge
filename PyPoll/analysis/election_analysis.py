@@ -12,6 +12,7 @@ def election_analysis():
     candidate_vote = []
     percentages = []
     results = {}
+    winner = []
 
     #loop through rows in csv
     for row in csvreader:
@@ -34,6 +35,8 @@ def election_analysis():
     
     for number in candidate_vote:
         percentages.append((number / total_votes)*100)
+    
+
    
     results["Candidate"] = candidates
     results["Votes"] = candidate_vote
@@ -53,7 +56,10 @@ def election_analysis():
     #create a for loop to loop through index (added 1 to grab last candidate) and determine values from result dictionary
     for x in range(index + 1):
         print(f'{results["Candidate"][x]}: {results["Vote Percentage"][x]}% ({results["Votes"][x]})')
-
+        if results["Votes"][x] == max(candidate_vote):
+            winner = results["Candidate"][x]
+    print("---------------------")
+    print(f'Winner: {winner}')
 
     #export election results to a textfile
     with open(output_path, "w", encoding="utf8") as textfile:
