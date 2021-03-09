@@ -41,7 +41,8 @@ def election_analysis():
     
     #loop through each candidate total votes, and find percentages. Add percentages to percentages list
     for number in candidate_vote:
-        percentages.append((number / total_votes)*100)
+        percentage = round((number / total_votes)*100,2)
+        percentages.append(percentage)
 
     #add lists to results dictionary
     results["Candidate"] = candidates
