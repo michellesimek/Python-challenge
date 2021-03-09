@@ -18,6 +18,7 @@ def election_analysis():
     candidate_vote = []
     percentages = []
     results = {}
+    finale_results = []
 
     #loop through rows in csv
     for row in csvreader:
@@ -47,18 +48,20 @@ def election_analysis():
     results["Votes"] = candidate_vote
     results["Vote Percentage"] = percentages
 
+    #create a for loop to loop through index (added 1 to grab last candidate) and determine values from result dictionary
+    #loop through index and append results to finale_results list
+    for x in range(index + 1):
+        finale_results.append(f'{results["Candidate"][x]}: {results["Vote Percentage"][x]}% ({results["Votes"][x]})')
+    # if statement to find winner based off who had the greatest number of votes
+        if results["Votes"][x] == max(candidate_vote):
+            winner = results["Candidate"][x]
+    
     #print results
     print("Election Results")
     print("---------------------")
     print(f'Total Votes: {total_votes}')
     print("---------------------")
-    #create a for loop to loop through index (added 1 to grab last candidate) and determine values from result dictionary
-    #loop through index to print each indidivuals results together
-    for x in range(index + 1):
-        print(f'{results["Candidate"][x]}: {results["Vote Percentage"][x]}% ({results["Votes"][x]})')
-        #if statement to find winner based off who had the greatest number of votes
-        if results["Votes"][x] == max(candidate_vote):
-            winner = results["Candidate"][x]
+    print('\n'.join(finale_results))
     print("---------------------")
     print(f'Winner: {winner}')
 
@@ -69,9 +72,9 @@ def election_analysis():
         "---------------------\n"
         "Total Votes: "+ str(total_votes) + "\n"
         "---------------------\n"
-        "Candidates: " + str(candidates) + "\n"
-        "Votes: " + str(candidate_vote) + "\n"
-        "Vote Percentage: " + str(percentages) + "\n")
+        "" + str(finale_results) + "\n"
+        "---------------------\n"
+        "Winner: " + (winner) + "\n")
 
 #open csv as read-only to analyze results
 with open(csvpath, "r", encoding="utf8") as csvfile:
