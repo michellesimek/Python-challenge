@@ -67,12 +67,17 @@ def election_analysis():
 
     #export election results to a textfile
     with open(output_path, "w", encoding="utf8") as textfile:
+        
         textfile.write(
         "Election Results\n"
         "---------------------\n"
         "Total Votes: "+ str(total_votes) + "\n"
-        "---------------------\n"
-        "" + str(finale_results) + "\n"
+        "---------------------\n")
+        
+        #print each element in list in a new line
+        textfile.write('\n'.join(finale_results) + "\n")
+
+        textfile.write(
         "---------------------\n"
         "Winner: " + (winner) + "\n")
 
