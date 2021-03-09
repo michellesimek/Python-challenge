@@ -52,13 +52,6 @@ def election_analysis():
     print("---------------------")
     print(f'Total Votes: {total_votes}')
     print("---------------------")
-    # print(candidates)
-    # print(candidate_vote)
-    # print(percentages)
-    # print(f'{results["Candidate"][0]}: {results["Vote Percentage"][0]}%  ({results["Votes"][0]})')
-    # print(f'{results["Candidate"][1]}: {results["Vote Percentage"][1]}%  ({results["Votes"][1]})')
-    # print(f'{results["Candidate"][2]}: {results["Vote Percentage"][2]}%  ({results["Votes"][2]})')
-    # print(f'{results["Candidate"][3]}: {results["Vote Percentage"][3]}%  ({results["Votes"][3]})')
     #create a for loop to loop through index (added 1 to grab last candidate) and determine values from result dictionary
     #loop through index to print each indidivuals results together
     for x in range(index + 1):
